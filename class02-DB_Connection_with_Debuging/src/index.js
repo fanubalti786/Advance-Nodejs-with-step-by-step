@@ -13,32 +13,34 @@ app.listen(process.env.PORT,()=>
 });
 
 
-// function for mongodb connection using mongoose
-const connectDB = async () => {
-    try {
-      await mongoose.connect(
-        ""
-      );
-  
-      console.log("mongo DB connected")
-      console.log(process.env.MONGODB_URL)
-  
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-  
-  connectDB()
-
-
-
-// ( async ()=>
-// {
+// // function for mongodb connection using mongoose
+// const connectDB = async () => {
 //     try {
-//        await mongoose.connect(`${process.env.MONGODB_URL}`)
-//        console.log(`DB connected`)
-//     } catch (error) {
-//         console.log(`ERORR ${error}`)
+//       await mongoose.connect(
+//         "mongodb+srv://fanubalti786:<sultanG0101>@servicecluster0.wcq6o.mongodb.net/"
+//         "mongodb+srv://fanubalti786:sultanG0101@servicecluster0.wcq6o.mongodb.net/"
         
+//       );
+  
+//       console.log("mongo DB connected")
+//       console.log(process.env.MONGODB_URL)
+  
+//     } catch (error) {
+//       console.log(error.message);
 //     }
-// })()
+//   };
+  
+//   connectDB()
+
+
+
+( async ()=>
+{
+    try {
+       await mongoose.connect(`${process.env.MONGODB_URL}`)
+       console.log(`DB connected`)
+    } catch (error) {
+        console.log(`ERORR ${error}`)
+        
+    }
+})()
