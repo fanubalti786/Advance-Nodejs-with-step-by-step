@@ -7,10 +7,7 @@ const app = express();
 dotenv.config(); 
 
 
-app.listen(process.env.PORT,()=>
-{
-    console.log(`port listning on ${process.env.PORT}`)
-});
+
 
 
 // // function for mongodb connection using mongoose
@@ -37,8 +34,19 @@ app.listen(process.env.PORT,()=>
 ( async ()=>
 {
     try {
-       await mongoose.connect(`${process.env.MONGODB_URL}`)
-       console.log(`DB connected`)
+       await mongoose.connect(`${process.env.MONGODB_URL}`);
+
+       app.on("error", (error)=>{
+        console.log(`ERROR ${error}`)
+       });
+
+       app.listen(process.env.PORT,()=>
+        {
+            console.log(`port listning on ${process.env.PORT}`)
+            console.log(`DB Connected`)
+        });
+
+
     } catch (error) {
         console.log(`ERORR ${error}`)
         
