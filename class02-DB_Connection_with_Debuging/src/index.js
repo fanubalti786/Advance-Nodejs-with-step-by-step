@@ -3,6 +3,7 @@
 import dotenv from 'dotenv'
 import express from 'express';
 import mongoose from 'mongoose';
+import '../src/db/db.js';
 const app = express();
 dotenv.config(); 
 
@@ -31,24 +32,27 @@ dotenv.config();
 
 
 
-( async ()=>
-{
-    try {
-       await mongoose.connect(`${process.env.MONGODB_URL}`);
 
-       app.on("error", (error)=>{
-        console.log(`ERROR ${error}`)
-       });
+// Connection DB with IIFE Function 
 
-       app.listen(process.env.PORT,()=>
-        {
-            console.log(`port listning on ${process.env.PORT}`)
-            console.log(`DB Connected`)
-        });
+// ( async ()=>
+// {
+//     try {
+//        await mongoose.connect(`${process.env.MONGODB_URL}`);
+
+//        app.on("error", (error)=>{
+//         console.log(`ERROR ${error}`)
+//        });
+
+//        app.listen(process.env.PORT,()=>
+//         {
+//             console.log(`port listning on ${process.env.PORT}`)
+//             console.log(`DB Connected`)
+//         });
 
 
-    } catch (error) {
-        console.log(`ERORR ${error}`)
+//     } catch (error) {
+//         console.log(`ERORR ${error}`)
         
-    }
-})()
+//     }
+// })()
