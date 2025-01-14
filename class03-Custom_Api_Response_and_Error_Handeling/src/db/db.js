@@ -1,8 +1,6 @@
-import dotenv from 'dotenv'
 import express from 'express';
 import mongoose from 'mongoose';
 const app = express();
-dotenv.config();
 
 ( async ()=>
 {
