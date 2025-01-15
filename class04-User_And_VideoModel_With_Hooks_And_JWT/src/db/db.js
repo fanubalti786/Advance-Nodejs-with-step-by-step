@@ -17,16 +17,22 @@ const app = express();
         console.log(`Express connection is failing to establish. ${error}`)
        });
 
-       app.listen(process.env.PORT,()=>
-        {
-            console.log(`port listning on ${process.env.PORT}`)
-            console.log(`DB Connected`)
-        });
 
 
     } catch (error) {
-        console.log(`MongoDb Connection Failed ${error}`);
+        console.log(`MongoDb Connection Failed ${error.message}`);
         process.exit(1);
         
     }
 })()
+.then(()=>
+{
+    app.listen(process.env.PORT,()=>
+        {
+            console.log(`port listning on ${process.env.PORT}`)
+            console.log(`DB Connected`)
+        });
+})
+.catch((error)=>{
+    console.log(`mongo db connection is failed : ${error}`)
+});
