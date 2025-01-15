@@ -6,7 +6,7 @@ dotenv.config();
 const app = express();
 
 ( async ()=>
-{
+{ 
     try {
 
        const connectionInstance = await mongoose.connect(`${process.env.MONGODB_URL}`);
