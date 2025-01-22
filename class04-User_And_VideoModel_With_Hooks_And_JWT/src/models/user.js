@@ -1,4 +1,6 @@
-import mongoose from "mongoose";
+import mongoose, {Schema} from "mongoose";
+import jwt from "jsonwebtoken"
+import bcrypt from "bcrypt"
 
 const userSchema = new Schema(
     {
@@ -50,6 +52,13 @@ const userSchema = new Schema(
     }
 );
 
-
 const User = mongoose.model("User", userSchema);
 export default User;
+
+userSchema.pre("save", function(next){
+    if(!this.isModified("password")) return next();
+    this.password = bcrypt.hash(this.password, 10);
+    next();
+
+});
+
