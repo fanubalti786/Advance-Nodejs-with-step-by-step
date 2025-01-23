@@ -1,4 +1,4 @@
-import asyncHandler from "../utlis/asyncHandler";
+import asyncHandler from "../utlis/asyncHandler.js";
 
 const registerUser = asyncHandler((req,res) => 
 {
