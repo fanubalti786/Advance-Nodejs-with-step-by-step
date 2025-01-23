@@ -52,8 +52,7 @@ const userSchema = new Schema(
     }
 );
 
-const User = mongoose.model("User", userSchema);
-export default User;
+
 
 userSchema.pre("save", async function(next){
     if(!this.isModified("password")) return next();
@@ -67,7 +66,7 @@ userSchema.methods.isPasswordCorrect = async function(password) {
     return await bcrypt.compare(password, this.password)
 };
 
-userSchema.mothods.generateAccessToken = async function (){
+userSchema.methods.generateAccessToken = async function (){
     return jwt.sign(
         {
             _id: this._id,
@@ -82,7 +81,7 @@ userSchema.mothods.generateAccessToken = async function (){
     )
 };
 
-userSchema.mothods.generateRefreshToken = async function (){
+userSchema.methods.generateRefreshToken = async function (){
     return jwt.sign(
         {
             _id: this._id,
@@ -97,3 +96,5 @@ userSchema.mothods.generateRefreshToken = async function (){
     )
 };
 
+const User = mongoose.model("User", userSchema);
+export default User;
