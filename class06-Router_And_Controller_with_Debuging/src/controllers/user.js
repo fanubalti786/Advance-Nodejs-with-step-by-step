@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken"
+import mongoose from "mongoose";
 import asyncHandler from "../utlis/asyncHandler.js";
 import ApiError from "../utlis/ApiError.js"
 import User from "../models/user.js"
@@ -5,10 +7,12 @@ import uploadOnCloudinary from "../utlis/Cloudinary.js"
 import ApiResponse  from "../utlis/ApiResponse.js";
 
 
+
+
 const registerUser = asyncHandler( async (req,res) => 
 {
     
-     // get user details from frontend
+    // get user details from frontend
     // validation - not empty
     // check if user already exists: username, email
     // check for images, check for avatar
@@ -81,6 +85,8 @@ const registerUser = asyncHandler( async (req,res) =>
         new ApiResponse(200, createdUser, "User registered Successfully")
     )
 });
+
+
 
 
 export default registerUser;
