@@ -8,7 +8,7 @@ import ApiResponse  from "../utlis/ApiResponse.js";
 const registerUser = asyncHandler( async (req,res) => 
 {
     
-     // get user details from frontend
+    // get user details from frontend
     // validation - not empty
     // check if user already exists: username, email
     // check for images, check for avatar
@@ -82,5 +82,10 @@ const registerUser = asyncHandler( async (req,res) =>
     )
 });
 
+const loginUser = asyncHandler(async (req,res) => 
+{
 
-export default registerUser;
+})
+
+
+export {registerUser,loginUser};
