@@ -271,7 +271,7 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
     throw new ApiError(400, "All fileds are required");
   }
 
-  const user = User.findByIdAndUpdate(
+  const user = await User.findByIdAndUpdate(
     req.user?._id,
     {
       $set: {
@@ -312,7 +312,7 @@ const updateUserAvatar = asyncHandler(async (req,res) =>
     return res
     .status(200)
     .json(200, user, "avatar Image updated successfully")
-})
+});
 
 const updateUserCoverImage = asyncHandler(async (req,res) =>
     {
@@ -338,7 +338,7 @@ const updateUserCoverImage = asyncHandler(async (req,res) =>
         return res
     .status(200)
     .json(200, user, "coverImage updated successfully")
-    })
+});
 
 
 
