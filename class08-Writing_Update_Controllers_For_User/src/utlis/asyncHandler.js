@@ -7,8 +7,9 @@ const asyncHandler = (requestHandler) => {
 
 export default asyncHandler;
 
+// 
 
-
+// router.route("/").post(asyncHnalder(requestHandler))
 
 // const asyncHandler = () => {}
 // const asyncHandler = (func) => () => {}

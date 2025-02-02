@@ -5,10 +5,12 @@ dotenv.config();
 
 const app = express();
 
-( async ()=>
-{ 
-    try {
 
+( async ()=>
+    { 
+        try {
+
+        console.log(process.env.MONGODB_URL)
        const connectionInstance = await mongoose.connect(`${process.env.MONGODB_URL}`);
        console.log(connectionInstance.connection.host);
 
@@ -24,15 +26,6 @@ const app = express();
         process.exit(1);
         
     }
-})()
-.then(()=>
-{
-    app.listen(process.env.PORT,()=>
-        {
-            console.log(`port listning on ${process.env.PORT}`)
-            console.log(`DB Connected`)
-        });
-})
-.catch((error)=>{
+})().catch((error)=>{
     console.log(`mongo db connection is failed : ${error}`)
 });

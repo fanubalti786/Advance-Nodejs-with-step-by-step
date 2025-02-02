@@ -18,6 +18,9 @@ router.route("/register").post(
     ]),
     registerUser);
 
+router.route("/new-register").post((req,res)=>{
+    res.status(200).send("hello")
+})
 
 router.route("/login").post(loginUser);
 

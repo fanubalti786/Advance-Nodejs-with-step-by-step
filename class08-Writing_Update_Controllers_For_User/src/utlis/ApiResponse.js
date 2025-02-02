@@ -8,3 +8,6 @@ class ApiResponse {
 }
 
 export default ApiResponse;
+
+
+// res.status(201).json({success:true,message:"hello",data:data})
