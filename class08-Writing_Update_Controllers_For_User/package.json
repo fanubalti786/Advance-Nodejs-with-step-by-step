@@ -1,12 +1,12 @@
 {
-  "name": "class07-Access_Refresh_Tokens",
+  "name": "class08-access_refresh_tokens",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "src/index.js"
+    "start": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",

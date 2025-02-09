@@ -6,25 +6,26 @@ import ApiResponse from "../utlis/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import mongoose, { trusted } from "mongoose";
 
-const generateAccessAndRefereshTokens = async (userId) => {
-  try {
-    const user = await User.findById(userId);
-    const accessToken = user.generateAccessToken();
-    const refreshToken = user.generateRefreshToken();
+// const generateAccessAndRefereshTokens = async (userId) => {
+//   try {
+//     const user = await User.findById(userId);
+//     const accessToken = user.generateAccessToken();
+//     const refreshToken = user.generateRefreshToken();
 
-    user.refreshToken = refreshToken;
-    await user.save({ validateBeforeSave: false });
+//     user.refreshToken = refreshToken;
+//     await user.save({ validateBeforeSave: false });
 
-    return { accessToken, refreshToken };
-  } catch (error) {
-    throw new ApiError(
-      500,
-      "Something went wrong while generating referesh and access token"
-    );
-  }
-};
+//     return { accessToken, refreshToken };
+//   } catch (error) {
+//     throw new ApiError(
+//       500,
+//       "Something went wrong while generating referesh and access token"
+//     );
+//   }
+// };
 
 const registerUser = asyncHandler(async (req, res) => {
+
   // get user details from frontend
   // validation - not empty
   // check if user already exists: username, email
@@ -54,29 +55,29 @@ const registerUser = asyncHandler(async (req, res) => {
 
   // console.log(req.files);
 
-  const avatarLocalPath = req.files?.avatar[0]?.path;
-  // const coverImageLocalPath = req.files?.coverImage[0]?.path;
-
-  let coverImageLocalPath;
-  if (
-    req.files &&
-    Array.isArray(req.files.coverImage) &&
-    req.files.coverImage.length > 0
-  ) {
-    coverImageLocalPath = req.files.coverImage[0].path;
-  }
+  const avatarLocalPath = req.files?.avatar[0].path;
 
   if (!avatarLocalPath) {
     throw new ApiError(400, "Avatar file is required");
   }
 
-  const avatar = await uploadOnCloudinary(avatarLocalPath);
-  const coverImage = await uploadOnCloudinary(coverImageLocalPath);
-
-  if (!avatar) {
-    throw new ApiError(400, "Avatar file is required");
+  let coverImage;
+  if (
+    req.files &&
+    Array.isArray(req.files.coverImage) &&
+    req.files.coverImage.length > 0
+  ) {
+    const coverImageLocalPath = req.files.coverImage[0].path;
+    coverImage = await uploadOnCloudinary(coverImageLocalPath)
   }
 
+
+  const avatar = await uploadOnCloudinary(avatarLocalPath);
+
+  if (!avatar) {
+    throw new ApiError(400, "Failed to get avatar url");
+  }
+  //
   const user = await User.create({
     fullName,
     avatar: avatar.url,
@@ -108,7 +109,6 @@ const loginUser = asyncHandler(async (req, res) => {
   //send cookie
 
   const { email, username, password } = req.body;
-  console.log(email);
 
   if (!username && !email) {
     throw new ApiError(400, "username or email is required");
@@ -134,10 +134,15 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Invalid user credentials");
   }
 
-  const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(
-    user._id
+  const accessToken = user.generateAccessToken(
+    process.env.ACCESS_TOKEN_EXPIRY
   );
-
+  const refreshToken =  user.generateAccessToken(
+    process.env.REFRESH_TOKEN_EXPIRY
+  );
+  user.refreshToken = refreshToken
+  await user.save()
+  
   const loggedInUser = await User.findById(user._id).select(
     "-password -refreshToken"
   );
